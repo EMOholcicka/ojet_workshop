@@ -1,0 +1,36 @@
+version: '3.8'
+
+networks:
+  hub:
+
+services:
+  mysql:
+    image: mysql:8.0.33
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'app_user'
+      MYSQL_PASSWORD: 'less_secret_password'
+      MYSQL_ROOT_PASSWORD: 'super_secret_password'
+    ports:
+      - '13306:3306'
+    expose:
+      - '13306'
+    volumes:
+      - my-db:/var/lib/mysql
+      - ./docker/mysql/:/docker-entrypoint-initdb.d/
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/fastapi/Dockerfile
+    container_name: fastapi
+    environment:
+      PORT: 8009
+    ports:
+      - '8009:8001'
+    restart: "no"
+
+
+volumes:
+  my-db:
