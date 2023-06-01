@@ -6,6 +6,7 @@ const fs = require("fs-extra");
 const fetch = require("node-fetch");
 
 const DATA_PATH = "./data.json";
+const ONOFF_DATA_PATH = "./data_onoff.json"
 
 const app = express();
 app.use(cors());
@@ -82,6 +83,31 @@ app.get("/star-wars/:name", (req, res) => {
     } else {
         res.status(404).send(`Sorry, "${req.params.name}" is not in Star Wars database.`);
     }
+});
+
+app.get("/onoff/", (req, res) => {
+    const characters = fs.readJsonSync(ONOFF_DATA_PATH);
+    const offset = parseInt(req.query.offset || 0);
+    const limit = parseInt(req.query.limit || characters.length);
+
+    if (req.query.dbhost) {
+        console.log("in condition")
+        const found = fs.readJsonSync(ONOFF_DATA_PATH).find(entry => entry.dbhost.toLowerCase() === req.query.dbhost.toLowerCase());
+
+        if (found) {
+            res.send({
+                data: [found]
+            });
+        } else {
+            res.status(404).send(`Sorry, "${req.params.name}" is not in Star Wars database.`);
+        }
+    }
+
+    res.send({
+        totalSize: characters.length,
+        hasMore: characters.length > offset + limit,
+        data: characters.slice(offset, offset + limit)
+    });
 });
 
 app.post("/star-wars", (req, res) => {

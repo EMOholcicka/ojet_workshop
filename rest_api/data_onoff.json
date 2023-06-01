@@ -1,0 +1,7 @@
+[
+    {"dbhost": "database1.svale.netledger.com", "cdb": "N/A", "pdbs": "nkey1, nkey2"},
+    {"dbhost": "database2.svale.netledger.com", "cdb": "N/A", "pdbs": "nkey3, nkey4"},
+    {"dbhost": "database3.svale.netledger.com", "cdb": "N/A", "pdbs": "nkey5, nkey6"},
+    {"dbhost": "database4.svale.netledger.com", "cdb": "N/A", "pdbs": "nkey7, nkey8"},
+    {"dbhost": "database5.svale.netledger.com", "cdb": "N/A", "pdbs": "nkey9, nkey10"}
+]

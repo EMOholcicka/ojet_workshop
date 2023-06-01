@@ -5,14 +5,7 @@ import 'ojs/ojtable';
 import { ojTable } from 'ojs/ojtable';
 import {CharacterType, RouteType} from '../../app-types';
 import { RESTDataProvider } from 'ojs/ojrestdataprovider';
-
-
 type TableProps = ComponentProps<"oj-table">;
-type selectedItems = {
-    row: string;
-    column: string;
-};
-
 const setSelectionMode: TableProps["selectionMode"] = {
     row: "single",
     column: "single"

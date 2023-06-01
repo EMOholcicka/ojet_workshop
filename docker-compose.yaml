@@ -1,7 +1,8 @@
 version: '3.8'
 
 networks:
-  hub:
+  workshop:
+
 
 services:
   mysql:
@@ -30,6 +31,10 @@ services:
     ports:
       - '8009:8001'
     restart: "no"
+    volumes:
+      - ./fast_api:/fast_api/app
+    extra_hosts:
+      - fakehub1.svale.netledger.com:127.0.0.1
 
 
 volumes:
