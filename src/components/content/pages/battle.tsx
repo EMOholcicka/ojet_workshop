@@ -14,11 +14,9 @@ type OnoffRecord = {
 
 type TableProps = ComponentProps<"oj-table">;
 
-const API_ENDPOINT: Readonly<string> = 'http://localhost:3333/onoff';
-
 let INIT_DATAPROVIDER = new RESTDataProvider<OnoffRecord["db_host"], OnoffRecord>({
     keyAttributes: "id",
-    url: API_ENDPOINT,
+    url: "",
     transforms: {},
 });
 
