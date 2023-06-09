@@ -8,8 +8,10 @@ import {CharacterType} from "./character-types";
 
 type Props = {
     isOpened: boolean | undefined;
+    isEdit: boolean;
     dialogData?: CharacterType;
     closeDialog: (ref:any,type:string) => void;
+    closeEdit: (ref:any,type:string) => void;
 };
 
 export default function RouteDialog(props: Props) {
@@ -21,6 +23,7 @@ export default function RouteDialog(props: Props) {
 
     const closeDialog = () => {
         props.closeDialog(dialogRef, 'close')
+        props.closeEdit(dialogRef, 'close')
     }
 
     return (
@@ -32,23 +35,28 @@ export default function RouteDialog(props: Props) {
                 <div>
                 <oj-form-layout direction="row" max-columns="2">
                     <oj-input-text label-hint="Name" readonly={true} value={props.dialogData?.Name}/>
-                    <oj-input-text label-hint="Homeworld" autocomplete="off" value={props.dialogData?.Homeworld}/>
-                    <oj-input-text label-hint="Born" value={props.dialogData?.Born}/>
+                    <oj-input-text label-hint="Homeworld" readonly={!props.isEdit} autocomplete="off" value={props.dialogData?.Homeworld}/>
+                    <oj-input-text label-hint="Born" readonly={!props.isEdit} value={props.dialogData?.Born}/>
 
-                    <oj-radioset label-hint="Gender" value={props.dialogData?.Gender}>
+                    <oj-radioset label-hint="Gender" readonly={!props.isEdit} value={props.dialogData?.Gender}>
                         <oj-option value="male">Male</oj-option>
                         <oj-option value="female">Female</oj-option>
                         <oj-option value="n/a">None</oj-option>
                     </oj-radioset>
 
-                    <oj-switch label-hint="Is Jedi?" value={props.dialogData?.IsJedi}/>
-                    <oj-input-text label-hint="Greeting" value={props.dialogData?.Greeting}/>
+                    {!props.isEdit ?
+                        <oj-input-text label-hint="Is Jedi?" readonly={true} value={props.dialogData?.IsJedi}/> :
+                        <oj-switch label-hint="Is Jedi?" readonly={!props.isEdit} value={props.dialogData?.IsJedi}/>}
+
+                    <oj-input-text label-hint="Greeting" readonly={!props.isEdit} value={props.dialogData?.Greeting}/>
+
 
                 </oj-form-layout>
                 </div>
 
                 <div slot="footer">
                     <oj-button id="okButton" onojAction={closeDialog}>OK</oj-button>
+                    {props.isEdit && <oj-button id="okButton" chroming="callToAction" onojAction={closeDialog}>Edit</oj-button>}
                 </div>
 
 

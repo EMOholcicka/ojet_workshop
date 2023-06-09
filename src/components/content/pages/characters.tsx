@@ -41,6 +41,7 @@ const API_ENDPOINT: Readonly<string> = "http://localhost:3333/star-wars";
 
 export default function Characters() {
     const [dialogOpened, setDialogOpened] = useState<boolean>();
+    const [dialogEdit, setdialogEdit] = useState<boolean>(false);
     const [dialogData, setDialogData] = useState<CharacterType>();
 
     const loadCharacter = useCallback((character: CharacterAPIType): CharacterType => {
@@ -108,13 +109,14 @@ export default function Characters() {
 
     const renderActionColumn = useCallback((cell: ojTable.CellTemplateContext<CharacterType["Name"], CharacterType>) => {
         const handleEdit = (event: ojButton.ojAction) => {
+            setdialogEdit(true)
+            setDialogOpened(true)
             event.detail.originalEvent.stopPropagation();
-            console.log('edit', cell.row);
         };
 
         const handleDelete = (event: ojButton.ojAction) => {
-            event.detail.originalEvent.stopPropagation();
             handleCharacterDelete(cell.row.Name);
+            event.detail.originalEvent.stopPropagation();
         };
 
         return [
@@ -131,6 +133,10 @@ export default function Characters() {
     const handleDialogClose = (ref: any, type: any) => {
         type === "create" ? setDialogOpened(false) : setDialogOpened(false);
         ref.current.close();
+    };
+
+    const handleDialogEdit = (ref: any, type: any) => {
+        type === "edit" ? setdialogEdit(false) : setdialogEdit(false);
     };
 
     const handleRouteSelect = useCallback((event: ojTable.firstSelectedRowChanged<CharacterType["Name"], CharacterType>) => {
@@ -163,7 +169,11 @@ export default function Characters() {
             </div>
 
             <div>
-                <RouteDialog isOpened={dialogOpened} dialogData={dialogData} closeDialog={handleDialogClose}/>
+                <RouteDialog isOpened={dialogOpened}
+                             isEdit={dialogEdit}
+                             dialogData={dialogData}
+                             closeDialog={handleDialogClose}
+                             closeEdit={handleDialogEdit}/>
             </div>
 
         </div>
