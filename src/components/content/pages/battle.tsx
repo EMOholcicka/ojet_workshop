@@ -2,9 +2,9 @@ import { useState } from "preact/hooks";
 import { ComponentProps } from "preact";
 import ArrayDataProvider= require("ojs/ojarraydataprovider");
 import { RESTDataProvider } from 'ojs/ojrestdataprovider';
-
-
 import "ojs/ojinputtext";
+import RouteDialog from "./characters-dialog";
+
 
 type OnoffRecord = {
     db_host: string;
@@ -23,8 +23,8 @@ let INIT_DATAPROVIDER = new RESTDataProvider<OnoffRecord["db_host"], OnoffRecord
 
 export default function Battle() {
 
-    const setColumnsDefault: TableProps["columnsDefault"] = { sortable: "disabled" };
-    const API_ENDPOINT: Readonly<string> = 'http://localhost:8009/onoff';
+    const setColumnsDefault: TableProps["columnsDefault"] = { sortable: "disabled", maxWidth: '90%'};
+    const API_ENDPOINT: Readonly<string> = 'http://localhost:3333/onoff';
     const keyAttributes: string = "Name";
     const columnsDef: TableProps["columns"] = [
         { headerText: "DB hostname", field: "dbhost", headerClassName: "oj-sm-only-hide", className: "oj-sm-only-hide", resizable: "enabled", sortable: "enabled"},
